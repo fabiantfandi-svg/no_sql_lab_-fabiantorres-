@@ -1,0 +1,45 @@
+// Seleccionar base de datos
+use reservas_db
+
+
+// Crear colecciones
+db.createCollection("usuarios")
+db.createCollection("servicios")
+db.createCollection("reservas")
+
+// Insertar usuarios
+db.usuarios.insertMany([
+  { nombre: "Fabian", email: "fabian@example.com" },
+  { nombre: "Laura", email: "laura@example.com" }
+])
+
+// Insertar servicios
+db.servicios.insertMany([
+  { nombre: "Spa", duracion: 60 },
+  { nombre: "Masaje", duracion: 45 }
+])
+
+// Insertar reservas con campos anidados
+db.reservas.insertMany([
+  {
+    usuario: "Fabian",
+    servicio: "Spa",
+    fecha: "2025-12-06",
+    estado: "pendiente",
+    detalles: { sala: "A1", prioridad: "alta" }
+  }
+])
+
+// Consultas
+db.reservas.find()
+db.reservas.find({ estado: "pendiente" })
+db.usuarios.find({}, { nombre: 1, email: 1 })
+
+// Actualizaciones
+db.reservas.updateOne(
+  { usuario: "Fabian" },
+  { $set: { estado: "confirmada" } }
+)
+
+// Eliminaciones
+db.reservas.deleteOne({ usuario: "Laura" })
